@@ -1,4 +1,4 @@
-package com.lulin.studyframe;
+package com.lulin.frame;
 
 /**
  * awt基本没用，不必深究

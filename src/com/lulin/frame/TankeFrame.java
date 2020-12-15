@@ -1,8 +1,7 @@
-package com.lulin.studyframe;
+package com.lulin.frame;
 
 import com.lulin.enums.Dir;
 import com.lulin.tanke.Tanke;
-
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -107,10 +106,14 @@ public class TankeFrame extends Frame {
 
         //设置主战坦克的方向
         private void setMainTankeDir() {
-            if (bL) tk.setDir(Dir.LEFT);
-            if (bR) tk.setDir(Dir.RIGHT);
-            if (bU) tk.setDir(Dir.UP);
-            if (bD) tk.setDir(Dir.DOWN);
+            if (!bL && !bR && !bU && !bD) tk.setMoving(false);//都没有按下时，不动
+            else {
+                tk.setMoving(true);//可以移动
+                if (bL) tk.setDir(Dir.LEFT);
+                if (bR) tk.setDir(Dir.RIGHT);
+                if (bU) tk.setDir(Dir.UP);
+                if (bD) tk.setDir(Dir.DOWN);
+            }
         }
     }
 }

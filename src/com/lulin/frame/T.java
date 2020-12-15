@@ -1,4 +1,4 @@
-package com.lulin.studyframe;
+package com.lulin.frame;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;

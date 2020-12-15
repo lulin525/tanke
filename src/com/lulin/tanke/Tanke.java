@@ -14,6 +14,7 @@ public class Tanke {
     private int x, y;//想让动起来，坐标就不能写死
     private Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
     private static final int SPEND = 10;//坦克速度
+    private boolean moving = false;//最初坦克是停止状态
 
     //构造方法
     public Tanke(int x, int y, Dir dir) {
@@ -26,6 +27,11 @@ public class Tanke {
     public void paint(Graphics g) {
         //拿这个笔在窗口中随便画
         g.fillRect(x, y, 50, 50);//矩形——坐标是以左上角为圆心，横是x，竖是y
+        move();//移动
+    }
+    //移动
+    private void move() {
+        if (!moving) return;//没有移动，禁止的
         switch (dir) {//根据方向进行位移
             case LEFT:
                 x -= SPEND;
@@ -46,19 +52,16 @@ public class Tanke {
     public void setX(int x) {
         this.x = x;
     }
+
     public void setY(int y) {
         this.y = y;
     }
+
     public void setDir(Dir dir) {
         this.dir = dir;
     }
-    public int getX() {
-        return x;
-    }
-    public int getY() {
-        return y;
-    }
-    public Dir getDir() {
-        return dir;
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 }
