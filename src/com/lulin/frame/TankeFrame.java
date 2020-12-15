@@ -3,6 +3,7 @@ package com.lulin.frame;
 import com.lulin.bullet.Bullet;
 import com.lulin.enums.Dir;
 import com.lulin.tanke.Tanke;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -18,13 +19,14 @@ import java.awt.event.WindowEvent;
  */
 public class TankeFrame extends Frame {
     Tanke tk = new Tanke(300, 500, Dir.DOWN);//坦克
-    Bullet bt=new Bullet(300,300,Dir.UP);//子弹
+    Bullet bt = new Bullet(300, 300, Dir.UP);//子弹
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//窗口的宽度和高度
 
 
     //构造方法
     public TankeFrame() {
         setVisible(true);//设为可见
-        setSize(800, 600);//px
+        setSize(GAME_WIDTH, GAME_HEIGHT);//px
         setResizable(false);//是否改变窗口大小——不能
         setTitle("坦克一期");//标题
         //2.键盘监听
@@ -36,6 +38,21 @@ public class TankeFrame extends Frame {
                 System.exit(0);
             }
         });
+    }
+
+    //窗口闪烁——解决双缓冲问题
+    Image offScreenImage=null;
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage==null)
+            offScreenImage=this.createImage(GAME_WIDTH,GAME_HEIGHT);
+        Graphics graphics=offScreenImage.getGraphics();
+        Color c=graphics.getColor();
+        graphics.setColor(Color.black);
+        graphics.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        graphics.setColor(c);
+        paint(graphics);
+        g.drawImage(offScreenImage,0,0,null);//整个图片画到窗口上
     }
 
     //窗口重新绘制时，该方法被调用

@@ -25,8 +25,11 @@ public class Tanke {
 
     //坦克画自己
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
         //拿这个笔在窗口中随便画
         g.fillRect(x, y, 50, 50);//矩形——坐标是以左上角为圆心，横是x，竖是y
+        g.setColor(c);
         move();//移动
     }
     //移动
