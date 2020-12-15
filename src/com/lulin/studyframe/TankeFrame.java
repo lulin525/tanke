@@ -1,6 +1,7 @@
 package com.lulin.studyframe;
 
 import com.lulin.enums.Dir;
+import com.lulin.tanke.Tanke;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -9,15 +10,14 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
+ * 坦克类
  * 继承Frame,重写方法
  *
  * @Author: LuLin
  * @Date: 2020/12/15 9:42
  */
 public class TankeFrame extends Frame {
-    int x = 200, y = 200; //想让动起来，坐标就不能写死
-    Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
-    private static final int SPEND = 10;//坦克速度
+    Tanke tk = new Tanke(200, 200, Dir.DOWN);
 
     //构造方法
     public TankeFrame() {
@@ -39,24 +39,7 @@ public class TankeFrame extends Frame {
     //窗口重新绘制时，该方法被调用
     @Override
     public void paint(Graphics g) {//画笔——系统调用
-        System.out.println("---走起---");
-        //拿这个笔在窗口中随便画
-        g.fillRect(x, y, 50, 50);//矩形——坐标是以左上角为圆心，横是x，竖是y
-        switch (dir) {
-            case LEFT:
-                x -= SPEND;
-                break;
-            case RIGHT:
-                x += SPEND;
-                break;
-            case UP:
-                y -= SPEND;
-                break;
-            case DOWN:
-                y += SPEND;
-                break;
-        }
-
+        tk.paint(g);//画笔传给主战坦克，让自己把自己给画出来
     }
 
     //键盘监听处理类
@@ -96,7 +79,6 @@ public class TankeFrame extends Frame {
 
             //刷新窗口
             //repaint();//会默认调用paint方法
-
         }
 
         //键盘松开事件
@@ -123,12 +105,12 @@ public class TankeFrame extends Frame {
             setMainTankeDir();
         }
 
-        //设置坦克主站的方向
+        //设置主战坦克的方向
         private void setMainTankeDir() {
-            if (bL) dir = Dir.LEFT;
-            if (bR) dir = Dir.RIGHT;
-            if (bU) dir = Dir.UP;
-            if (bD) dir = Dir.DOWN;
+            if (bL) tk.setDir(Dir.LEFT);
+            if (bR) tk.setDir(Dir.RIGHT);
+            if (bU) tk.setDir(Dir.UP);
+            if (bD) tk.setDir(Dir.DOWN);
         }
     }
 }
