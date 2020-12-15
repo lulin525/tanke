@@ -1,5 +1,6 @@
 package com.lulin.frame;
 
+import com.lulin.bullet.Bullet;
 import com.lulin.enums.Dir;
 import com.lulin.tanke.Tanke;
 import java.awt.*;
@@ -16,7 +17,9 @@ import java.awt.event.WindowEvent;
  * @Date: 2020/12/15 9:42
  */
 public class TankeFrame extends Frame {
-    Tanke tk = new Tanke(200, 200, Dir.DOWN);
+    Tanke tk = new Tanke(300, 500, Dir.DOWN);//坦克
+    Bullet bt=new Bullet(300,300,Dir.UP);//子弹
+
 
     //构造方法
     public TankeFrame() {
@@ -39,6 +42,7 @@ public class TankeFrame extends Frame {
     @Override
     public void paint(Graphics g) {//画笔——系统调用
         tk.paint(g);//画笔传给主战坦克，让自己把自己给画出来
+        bt.Paint(g);
     }
 
     //键盘监听处理类
