@@ -9,6 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 坦克类
@@ -18,9 +20,10 @@ import java.awt.event.WindowEvent;
  * @Date: 2020/12/15 9:42
  */
 public class TankeFrame extends Frame {
-    Tanke tk = new Tanke(300, 500, Dir.DOWN);//坦克
-    Bullet bt = new Bullet(300, 300, Dir.UP);//子弹
-    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//窗口的宽度和高度
+    Tanke tk = new Tanke(300, 500, Dir.DOWN, this);//坦克
+    //java里面有没有内存泄漏啊？？？——当然有——和容器有关，容器用了，不清理的话，会有内存泄漏
+    public  List<Bullet> bulletList = new ArrayList<>();//多个子弹——数组有长度限制
+    public  static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//窗口的宽度和高度
 
 
     //构造方法
@@ -41,25 +44,32 @@ public class TankeFrame extends Frame {
     }
 
     //窗口闪烁——解决双缓冲问题
-    Image offScreenImage=null;
+    Image offScreenImage = null;
+
     @Override
     public void update(Graphics g) {
-        if (offScreenImage==null)
-            offScreenImage=this.createImage(GAME_WIDTH,GAME_HEIGHT);
-        Graphics graphics=offScreenImage.getGraphics();
-        Color c=graphics.getColor();
+        if (offScreenImage == null)
+            offScreenImage = this.createImage(GAME_WIDTH, GAME_HEIGHT);
+        Graphics graphics = offScreenImage.getGraphics();
+        Color c = graphics.getColor();
         graphics.setColor(Color.black);
-        graphics.fillRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+        graphics.fillRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         graphics.setColor(c);
         paint(graphics);
-        g.drawImage(offScreenImage,0,0,null);//整个图片画到窗口上
+        g.drawImage(offScreenImage, 0, 0, null);//整个图片画到窗口上
     }
 
     //窗口重新绘制时，该方法被调用
     @Override
     public void paint(Graphics g) {//画笔——系统调用
         tk.paint(g);//画笔传给主战坦克，让自己把自己给画出来
-        bt.Paint(g);
+      /*  for (Bullet bt : bulletList) {//Exception in thread "AWT-EventQueue-0" java.util.ConcurrentModificationException
+            bt.Paint(g);//这种是不能删除的，处理边界问题式，会报错，内部迭代问题
+        }*/
+        for (int i = 0; i <bulletList.size() ; i++) {
+            bulletList.get(i).Paint(g);
+        }
+
     }
 
     //键盘监听处理类
@@ -79,7 +89,6 @@ public class TankeFrame extends Frame {
             int key = e.getKeyCode();//获取系统字符
             switch (key) {
                 case KeyEvent.VK_LEFT:
-                    //x -= 20;
                     bL = true;
                     break;
                 case KeyEvent.VK_RIGHT:
@@ -96,9 +105,6 @@ public class TankeFrame extends Frame {
             }
             //设置坦克主站的方向
             setMainTankeDir();
-
-            //刷新窗口
-            //repaint();//会默认调用paint方法
         }
 
         //键盘松开事件
@@ -117,6 +123,9 @@ public class TankeFrame extends Frame {
                     break;
                 case KeyEvent.VK_DOWN:
                     bD = false;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    tk.fire();//发射子弹
                     break;
                 default:
                     break;

@@ -1,6 +1,8 @@
 package com.lulin.tanke;
 
+import com.lulin.bullet.Bullet;
 import com.lulin.enums.Dir;
+import com.lulin.frame.TankeFrame;
 
 import java.awt.*;
 
@@ -15,12 +17,14 @@ public class Tanke {
     private Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
     private static final int SPEND = 10;//坦克速度
     private boolean moving = false;//最初坦克是停止状态
+    private TankeFrame tf = null;
 
     //构造方法
-    public Tanke(int x, int y, Dir dir) {
+    public Tanke(int x, int y, Dir dir, TankeFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
     //坦克画自己
@@ -32,6 +36,7 @@ public class Tanke {
         g.setColor(c);
         move();//移动
     }
+
     //移动
     private void move() {
         if (!moving) return;//没有移动，禁止的
@@ -51,7 +56,6 @@ public class Tanke {
         }
     }
 
-
     public void setX(int x) {
         this.x = x;
     }
@@ -66,5 +70,10 @@ public class Tanke {
 
     public void setMoving(boolean moving) {
         this.moving = moving;
+    }
+
+    //发射子弹
+    public void fire() {
+        tf.bulletList.add(new Bullet(this.x, this.y, this.dir,this.tf));
     }
 }
