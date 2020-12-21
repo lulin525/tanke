@@ -3,6 +3,7 @@ package com.lulin.bullet;
 import com.lulin.enums.Dir;
 import com.lulin.frame.TankeFrame;
 import com.lulin.staticflie.ResourceMgr;
+import com.lulin.tanke.Tanke;
 
 import java.awt.*;
 
@@ -19,7 +20,7 @@ public class Bullet {
     public static int WIDTH = ResourceMgr.bulletD.getWidth();//子弹图片的宽
     public static int HEIGT = ResourceMgr.bulletD.getHeight();//子弹图片的高
 
-    private boolean live = true;//处理边界问题
+    private boolean living = true;//处理边界问题
     private TankeFrame tf;
 
     public Bullet(int x, int y, Dir dir, TankeFrame tf) {
@@ -31,7 +32,7 @@ public class Bullet {
 
     //子弹画自己
     public void Paint(Graphics g) {
-        if (!live) {//如果不活了
+        if (!living) {//如果不活了
             tf.bulletList.remove(this);//最简单的，有bug
         }
      /*   Color c = g.getColor();
@@ -73,7 +74,7 @@ public class Bullet {
                 break;
         }
         if (x < 0 || y < 0 || x > TankeFrame.GAME_WIDTH || y > TankeFrame.GAME_HEIGHT)
-            live = false;
+            living = false;
     }
 
     public void setX(int x) {
@@ -86,5 +87,20 @@ public class Bullet {
 
     public void setDir(Dir dir) {
         this.dir = dir;
+    }
+
+    //子弹和坦克碰撞
+    public void collideWith(Tanke tanke) {
+        Rectangle rectBullet=new Rectangle(this.x,this.y,WIDTH,HEIGT);//子弹的矩形
+        Rectangle rectTanke=new Rectangle(tanke.getX(),tanke.getY(),tanke.WIDTH,tanke.HEIGT);//坦克的矩形
+        if (rectBullet.intersects(rectTanke)){//判断两个方块是否相交
+            //碰到就死了
+            tanke.die();
+            this.die();
+        }
+    }
+    //死
+    public void die() {
+        this.living = false;
     }
 }

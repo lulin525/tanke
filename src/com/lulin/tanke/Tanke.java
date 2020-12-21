@@ -4,6 +4,7 @@ import com.lulin.bullet.Bullet;
 import com.lulin.enums.Dir;
 import com.lulin.frame.TankeFrame;
 import com.lulin.staticflie.ResourceMgr;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import java.awt.*;
 
@@ -22,6 +23,7 @@ public class Tanke {
     public static int HEIGT = ResourceMgr.tankD.getHeight();//坦克图片的高
 
     private boolean moving = false;//最初坦克是停止状态
+    private boolean living = true;//活的
     private TankeFrame tf = null;
 
     //构造方法
@@ -40,6 +42,9 @@ public class Tanke {
         g.fillRect(x, y, 50, 50);//矩形——坐标是以左上角为圆心，横是x，竖是y
         g.setColor(c);改成画图片*/
         //根据方向画图片
+        if (!living) {
+            tf.tankeList.remove(this);//移除
+        } ;//如果不活
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceMgr.tankL, x, y, null);
@@ -99,5 +104,19 @@ public class Tanke {
         int bx = this.x + Tanke.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = this.y + Tanke.HEIGT / 2 - Bullet.HEIGT / 2;
         tf.bulletList.add(new Bullet(bx, by, this.dir, this.tf));
+    }
+
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    //坦克死
+    public void die() {
+        this.living = false;
     }
 }
