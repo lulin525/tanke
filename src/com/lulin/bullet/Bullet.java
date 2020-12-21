@@ -1,6 +1,7 @@
 package com.lulin.bullet;
 
 import com.lulin.enums.Dir;
+import com.lulin.enums.Group;
 import com.lulin.frame.TankeFrame;
 import com.lulin.staticflie.ResourceMgr;
 import com.lulin.tanke.Tanke;
@@ -23,11 +24,15 @@ public class Bullet {
     private boolean living = true;//处理边界问题
     private TankeFrame tf;
 
-    public Bullet(int x, int y, Dir dir, TankeFrame tf) {
+    //用于分组，区分子弹
+    private Group group=Group.BAD;//坏蛋
+
+    public Bullet(int x, int y, Dir dir, Group group,TankeFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
 
     //子弹画自己
@@ -89,8 +94,17 @@ public class Bullet {
         this.dir = dir;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     //子弹和坦克碰撞
     public void collideWith(Tanke tanke) {
+        if (this.group==tanke.getGroup()) return;
+
         Rectangle rectBullet=new Rectangle(this.x,this.y,WIDTH,HEIGT);//子弹的矩形
         Rectangle rectTanke=new Rectangle(tanke.getX(),tanke.getY(),tanke.WIDTH,tanke.HEIGT);//坦克的矩形
         if (rectBullet.intersects(rectTanke)){//判断两个方块是否相交

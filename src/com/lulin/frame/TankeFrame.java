@@ -2,6 +2,7 @@ package com.lulin.frame;
 
 import com.lulin.bullet.Bullet;
 import com.lulin.enums.Dir;
+import com.lulin.enums.Group;
 import com.lulin.tanke.Tanke;
 import sun.text.resources.cldr.bn.FormatData_bn_IN;
 
@@ -21,7 +22,7 @@ import java.util.List;
  * @Date: 2020/12/15 9:42
  */
 public class TankeFrame extends Frame {
-    Tanke tk = new Tanke(300, 500, Dir.UP, this);//坦克
+    Tanke tk = new Tanke(300, 500, Dir.UP, Group.GOOD,this);//坦克
     //java里面有没有内存泄漏啊？？？——当然有——和容器有关，容器用了，不清理的话，会有内存泄漏
     public List<Bullet> bulletList = new ArrayList<>();//多个子弹——数组有长度限制
     public List<Tanke> tankeList = new ArrayList<>();//敌方坦克

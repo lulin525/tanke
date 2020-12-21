@@ -2,11 +2,12 @@ package com.lulin.tanke;
 
 import com.lulin.bullet.Bullet;
 import com.lulin.enums.Dir;
+import com.lulin.enums.Group;
 import com.lulin.frame.TankeFrame;
 import com.lulin.staticflie.ResourceMgr;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * 坦克类
@@ -17,21 +18,26 @@ import java.awt.*;
 public class Tanke {
     private int x, y;//想让动起来，坐标就不能写死
     private Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
-    private static final int SPEND = 10;//坦克速度
+    private static final int SPEND = 5;//坦克速度
 
     public static int WIDTH = ResourceMgr.tankD.getWidth();//坦克图片的宽
     public static int HEIGT = ResourceMgr.tankD.getHeight();//坦克图片的高
 
-    private boolean moving = false;//最初坦克是停止状态
+    private boolean moving = true;//最初坦克是停止状态
     private boolean living = true;//活的
     private TankeFrame tf = null;
 
+    private Random random = null;//随机产生
+    //用于分组，区分子弹
+    private Group group = Group.BAD;//坏蛋
+
     //构造方法
-    public Tanke(int x, int y, Dir dir, TankeFrame tf) {
+    public Tanke(int x, int y, Dir dir, Group group, TankeFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.tf = tf;
+        this.group = group;
     }
 
     //坦克画自己
@@ -44,7 +50,8 @@ public class Tanke {
         //根据方向画图片
         if (!living) {
             tf.tankeList.remove(this);//移除
-        } ;//如果不活
+        }
+        ;//如果不活
         switch (dir) {
             case LEFT:
                 g.drawImage(ResourceMgr.tankL, x, y, null);
@@ -80,6 +87,9 @@ public class Tanke {
                 y += SPEND;
                 break;
         }
+      /*  if (random.nextInt(10) > 8)
+            this.fire(); //发射子弹
+*/
     }
 
     public void setX(int x) {
@@ -98,12 +108,20 @@ public class Tanke {
         this.moving = moving;
     }
 
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
     //发射子弹
     public void fire() {
         //将子弹从坦克中心位置打出
         int bx = this.x + Tanke.WIDTH / 2 - Bullet.WIDTH / 2;
         int by = this.y + Tanke.HEIGT / 2 - Bullet.HEIGT / 2;
-        tf.bulletList.add(new Bullet(bx, by, this.dir, this.tf));
+        tf.bulletList.add(new Bullet(bx, by, this.dir, this.group, this.tf));
     }
 
 
