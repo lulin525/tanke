@@ -2,6 +2,7 @@ package com.lulin.bullet;
 
 import com.lulin.enums.Dir;
 import com.lulin.frame.TankeFrame;
+import com.lulin.staticflie.ResourceMgr;
 
 import java.awt.*;
 
@@ -15,7 +16,8 @@ public class Bullet {
     private static final int SPEND = 10;//子弹速度
     private int x, y;//坐标
     private Dir dir;
-    private static int WIDTH = 30, HEIGT = 30;
+    public static int WIDTH = ResourceMgr.bulletD.getWidth();//子弹图片的宽
+    public static int HEIGT = ResourceMgr.bulletD.getHeight();//子弹图片的高
 
     private boolean live = true;//处理边界问题
     private TankeFrame tf;
@@ -32,10 +34,25 @@ public class Bullet {
         if (!live) {//如果不活了
             tf.bulletList.remove(this);//最简单的，有bug
         }
-        Color c = g.getColor();
+     /*   Color c = g.getColor();
         g.setColor(Color.red);
         g.fillOval(x, y, WIDTH, HEIGT);//圆
-        g.setColor(c);
+        g.setColor(c);*/
+        //根据方向画子弹图片
+        switch (dir) {
+            case LEFT:
+                g.drawImage(ResourceMgr.bulletL, x, y, null);
+                break;
+            case RIGHT:
+                g.drawImage(ResourceMgr.bulletR, x, y, null);
+                break;
+            case UP:
+                g.drawImage(ResourceMgr.bulletU, x, y, null);
+                break;
+            case DOWN:
+                g.drawImage(ResourceMgr.bulletD, x, y, null);
+                break;
+        }
         move();//移动
     }
 
