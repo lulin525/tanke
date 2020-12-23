@@ -12,7 +12,7 @@ import javax.sound.sampled.SourceDataLine;
 /**
  * new线程播放爆炸的音频工具类
  */
-public class Audio  extends  Thread{
+public class Audio{
 
     byte[] b = new byte[1024 * 1024 * 15];
 

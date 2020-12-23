@@ -17,7 +17,6 @@ public class Explode {
     public static int HEIGT = ResourceMgr.explodes[0].getHeight();//子弹图片的高
 
     private int x, y;
-    private boolean living = true;//处理边界问题
     private TankeFrame tf;
 
     private int step = 0;
@@ -26,13 +25,14 @@ public class Explode {
         this.x = x;
         this.y = y;
         this.tf = tf;
-        new Audio("audio/explode.wav").run();
+        new Thread(()->new Audio("audio/explode.wav").loop()).start();//爆炸声
     }
 
     //画爆炸图片
     public void Paint(Graphics g) {
         g.drawImage(ResourceMgr.explodes[step++], x, y, null);
-        if (step >= ResourceMgr.explodes.length) step = 0;
+        if (step >= ResourceMgr.explodes.length)
+            tf.explodeList.remove(this);
     }
 
 }

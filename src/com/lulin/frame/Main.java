@@ -1,5 +1,6 @@
 package com.lulin.frame;
 
+import com.lulin.audio.Audio;
 import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
 import com.lulin.tanke.Tanke;
@@ -18,6 +19,7 @@ public class Main {
         for (int i = 0; i < 5; i++) {
             tf.tankeList.add(new Tanke(50+i*80,200, Dir.DOWN, Group.BAD,tf));
         }
+        //new Thread(()->new Audio("audio/war1.wav").loop()).start();
 
         //最简单的自动刷新窗口
         while (true){

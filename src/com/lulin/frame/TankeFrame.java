@@ -5,8 +5,6 @@ import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
 import com.lulin.tanke.Explode;
 import com.lulin.tanke.Tanke;
-import sun.text.resources.cldr.bn.FormatData_bn_IN;
-
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -28,7 +26,7 @@ public class TankeFrame extends Frame {
     public List<Bullet> bulletList = new ArrayList<>();//多个子弹——数组有长度限制
     public List<Tanke> tankeList = new ArrayList<>();//敌方坦克
 
-    Explode explode = new Explode(100, 100, this);//坦克爆炸图片
+    public List<Explode> explodeList = new ArrayList<>();//坦克爆炸
 
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//窗口的宽度和高度
 
@@ -77,6 +75,7 @@ public class TankeFrame extends Frame {
         g.setColor(Color.WHITE);
         g.drawString("坦克的数量：" + tankeList.size(), 10, 60);
         g.drawString("子弹的数量：" + bulletList.size(), 10, 80);
+        g.drawString("爆炸的数量：" + explodeList.size(), 10, 100);
         g.setColor(c);
         tk.paint(g);
 
@@ -84,17 +83,24 @@ public class TankeFrame extends Frame {
         for (int i = 0; i < bulletList.size(); i++) {
             bulletList.get(i).Paint(g);
         }
+
         //画敌方坦克
         for (int i = 0; i < tankeList.size(); i++) {
             tankeList.get(i).paint(g);
         }
+
+        //画坦克爆炸图片
+        for (int i = 0; i < explodeList.size(); i++) {
+            explodeList.get(i).Paint(g);
+        }
+
         //遍历子弹和坦克是否相撞
         for (int i = 0; i < bulletList.size(); i++) {
             for (int j = 0; j < tankeList.size(); j++) {
                 bulletList.get(i).collideWith(tankeList.get(j));//碰撞
             }
         }
-        explode.Paint(g);//坦克爆炸图片
+
 
 
     }

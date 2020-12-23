@@ -4,6 +4,7 @@ import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
 import com.lulin.frame.TankeFrame;
 import com.lulin.staticflie.ResourceMgr;
+import com.lulin.tanke.Explode;
 import com.lulin.tanke.Tanke;
 
 import java.awt.*;
@@ -111,6 +112,10 @@ public class Bullet {
             //碰到就死了
             tanke.die();
             this.die();
+
+            tf.explodeList.add(new Explode(x,y,tf));
+
+
         }
     }
     //死
