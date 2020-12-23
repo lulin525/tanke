@@ -12,8 +12,9 @@ import java.io.IOException;
  */
 public class ResourceMgr {
     //定义左右上下
-    public static BufferedImage tankL, tankR, tankU, tankD;///坦克
-    public static BufferedImage bulletL, bulletR, bulletU, bulletD;///坦克
+    public static BufferedImage goodTankL, goodTankR,goodTankU, goodTankD;///坦克
+    public static BufferedImage badTankL, badTankR,badTankU, badTankD;///坦克
+    public static BufferedImage bulletL,bulletR, bulletU, bulletD;///坦克
     public static BufferedImage[] explodes = new BufferedImage[16];///坦克爆炸
 
 
@@ -21,10 +22,16 @@ public class ResourceMgr {
     static {
         try {
             //加载坦克左右上下图片
-            tankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
-            tankL = ImageUtil.rotateImage(tankU, -90);
-            tankR = ImageUtil.rotateImage(tankU, 90);
-            tankD = ImageUtil.rotateImage(tankU, 180);
+            goodTankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/GoodTank1.png"));
+            goodTankL = ImageUtil.rotateImage(goodTankU, -90);
+            goodTankR = ImageUtil.rotateImage(goodTankU, 90);
+            goodTankD = ImageUtil.rotateImage(goodTankU, 180);
+
+            //加载敌军坦克左右上下图片
+            badTankU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/BadTank1.png"));
+            badTankL = ImageUtil.rotateImage(badTankU, -90);
+            badTankR = ImageUtil.rotateImage(badTankU, 90);
+            badTankD = ImageUtil.rotateImage(badTankU, 180);
 
             //加载子弹图片
             bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.png"));

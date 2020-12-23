@@ -20,8 +20,8 @@ public class Tanke {
     private Dir dir =Dir.DOWN;//最开始给坦克一个方向，例如向下
     private static final int SPEND = 2;//坦克速度
 
-    public static int WIDTH = ResourceMgr.tankD.getWidth();//坦克图片的宽
-    public static int HEIGT = ResourceMgr.tankD.getHeight();//坦克图片的高
+    public static int WIDTH = ResourceMgr.goodTankD.getWidth();//坦克图片的宽
+    public static int HEIGT = ResourceMgr.goodTankD.getHeight();//坦克图片的高
 
     private boolean moving = true;//最初坦克是停止状态
     private boolean living = true;//活的
@@ -48,22 +48,21 @@ public class Tanke {
         g.fillRect(x, y, 50, 50);//矩形——坐标是以左上角为圆心，横是x，竖是y
         g.setColor(c);改成画图片*/
         //根据方向画图片
-        if (!living) {
-            tf.tankeList.remove(this);//移除
-        }
-        ;//如果不活
+        if (!living) tf.tankeList.remove(this);//移除
+
+        //如果不活
         switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.tankL, x, y, null);
+                g.drawImage(this.group==Group.GOOD?ResourceMgr.goodTankL:ResourceMgr.badTankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR, x, y, null);
+                g.drawImage(this.group==Group.GOOD?ResourceMgr.goodTankR:ResourceMgr.badTankR, x, y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU, x, y, null);
+                g.drawImage(this.group==Group.GOOD?ResourceMgr.goodTankU:ResourceMgr.badTankU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD, x, y, null);
+                g.drawImage(this.group==Group.GOOD?ResourceMgr.goodTankD:ResourceMgr.badTankD, x, y, null);
                 break;
         }
 
