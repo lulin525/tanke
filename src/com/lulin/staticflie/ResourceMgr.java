@@ -10,8 +10,9 @@ import java.io.IOException;
  */
 public class ResourceMgr {
     //定义左右上下
-    public static BufferedImage tankL,tankR,tankU, tankD;///坦克
-    public static BufferedImage bulletL,bulletR,bulletU, bulletD;///坦克
+    public static BufferedImage tankL, tankR, tankU, tankD;///坦克
+    public static BufferedImage bulletL, bulletR, bulletU, bulletD;///坦克
+    public static BufferedImage[] explodes = new BufferedImage[16];///坦克爆炸
 
 
     //静态语句块初始化
@@ -24,10 +25,15 @@ public class ResourceMgr {
             tankL = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/tankL.gif"));
 
             //加载子弹图片
-            bulletL=ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletL.gif"));
-            bulletR= ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletR.gif"));
-            bulletD=  ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
-            bulletU=  ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.gif"));
+            bulletL = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletL.gif"));
+            bulletR = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletR.gif"));
+            bulletD = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletD.gif"));
+            bulletU = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/bulletU.gif"));
+            //加载坦克爆炸图片
+            for (int i = 0; i < explodes.length; i++) {
+                explodes[i] = ImageIO.read(ResourceMgr.class.getClassLoader().getResourceAsStream("images/e" + (i + 1) + ".gif"));
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

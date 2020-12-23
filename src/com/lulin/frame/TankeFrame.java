@@ -3,6 +3,7 @@ package com.lulin.frame;
 import com.lulin.bullet.Bullet;
 import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
+import com.lulin.tanke.Explode;
 import com.lulin.tanke.Tanke;
 import sun.text.resources.cldr.bn.FormatData_bn_IN;
 
@@ -22,10 +23,13 @@ import java.util.List;
  * @Date: 2020/12/15 9:42
  */
 public class TankeFrame extends Frame {
-    Tanke tk = new Tanke(300, 500, Dir.UP, Group.GOOD,this);//坦克
+    Tanke tk = new Tanke(300, 500, Dir.UP, Group.GOOD, this);//坦克
     //java里面有没有内存泄漏啊？？？——当然有——和容器有关，容器用了，不清理的话，会有内存泄漏
     public List<Bullet> bulletList = new ArrayList<>();//多个子弹——数组有长度限制
     public List<Tanke> tankeList = new ArrayList<>();//敌方坦克
+
+    Explode explode = new Explode(100, 100, this);//坦克爆炸图片
+
     public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//窗口的宽度和高度
 
 
@@ -71,8 +75,8 @@ public class TankeFrame extends Frame {
         }*/
         Color c = g.getColor();
         g.setColor(Color.WHITE);
-        g.drawString("坦克的数量："+tankeList.size(),10,60);
-        g.drawString("子弹的数量："+bulletList.size(),10,80);
+        g.drawString("坦克的数量：" + tankeList.size(), 10, 60);
+        g.drawString("子弹的数量：" + bulletList.size(), 10, 80);
         g.setColor(c);
         tk.paint(g);
 
@@ -84,13 +88,14 @@ public class TankeFrame extends Frame {
         for (int i = 0; i < tankeList.size(); i++) {
             tankeList.get(i).paint(g);
         }
-       //遍历子弹和坦克是否相撞
-        for (int i = 0; i < bulletList.size() ; i++) {
-            for (int j = 0; j < tankeList.size() ; j++) {
+        //遍历子弹和坦克是否相撞
+        for (int i = 0; i < bulletList.size(); i++) {
+            for (int j = 0; j < tankeList.size(); j++) {
                 bulletList.get(i).collideWith(tankeList.get(j));//碰撞
-
             }
         }
+        explode.Paint(g);//坦克爆炸图片
+
 
     }
 
