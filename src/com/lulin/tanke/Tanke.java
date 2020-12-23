@@ -5,7 +5,6 @@ import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
 import com.lulin.frame.TankeFrame;
 import com.lulin.staticflie.ResourceMgr;
-
 import java.awt.*;
 import java.util.Random;
 
@@ -17,7 +16,7 @@ import java.util.Random;
  */
 public class Tanke {
     private int x, y;//想让动起来，坐标就不能写死
-    private Dir dir =Dir.DOWN;//最开始给坦克一个方向，例如向下
+    private Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
     private static final int SPEND = 2;//坦克速度
 
     public static int WIDTH = ResourceMgr.goodTankD.getWidth();//坦克图片的宽
@@ -53,16 +52,16 @@ public class Tanke {
         //如果不活
         switch (dir) {
             case LEFT:
-                g.drawImage(this.group==Group.GOOD?ResourceMgr.goodTankL:ResourceMgr.badTankL, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x, y, null);
                 break;
             case RIGHT:
-                g.drawImage(this.group==Group.GOOD?ResourceMgr.goodTankR:ResourceMgr.badTankR, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x, y, null);
                 break;
             case UP:
-                g.drawImage(this.group==Group.GOOD?ResourceMgr.goodTankU:ResourceMgr.badTankU, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x, y, null);
                 break;
             case DOWN:
-                g.drawImage(this.group==Group.GOOD?ResourceMgr.goodTankD:ResourceMgr.badTankD, x, y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x, y, null);
                 break;
         }
 
@@ -86,15 +85,28 @@ public class Tanke {
                 y += SPEND;
                 break;
         }
-      if (this.group==Group.BAD && random.nextInt(100) > 95)
-          this.fire(); //发射子弹
-      if (this.group==Group.BAD&& random.nextInt(10) > 8)
-          randomDir();//定义随机方向——敌方坦克
+        if (this.group == Group.BAD && random.nextInt(100) > 95)
+            this.fire(); //发射子弹
+        if (this.group == Group.BAD && random.nextInt(10) > 8)
+            randomDir();//定义随机方向——敌方坦克
+
+        //边界检测
+        boundsCheck();
+
     }
+
+    //边界检测
+    private void boundsCheck() {
+        if (this.x < 0) x = 0;
+        if (this.y < 30) y = 30;
+        if (this.x > TankeFrame.GAME_WIDTH - Tanke.WIDTH) x = TankeFrame.GAME_WIDTH - Tanke.WIDTH;
+        if (this.y > TankeFrame.GAME_HEIGHT - Tanke.HEIGT) y = TankeFrame.GAME_HEIGHT - Tanke.HEIGT;
+    }
+
     //定义随机方向
     private void randomDir() {
 
-        this.dir=Dir.values()[random.nextInt(4)];
+        this.dir = Dir.values()[random.nextInt(4)];
     }
 
     public void setX(int x) {
