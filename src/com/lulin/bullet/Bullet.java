@@ -26,9 +26,9 @@ public class Bullet {
     private TankeFrame tf;
 
     //用于分组，区分子弹
-    private Group group=Group.BAD;//坏蛋
+    private Group group = Group.BAD;//坏蛋
 
-    public Bullet(int x, int y, Dir dir, Group group,TankeFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, TankeFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
@@ -98,24 +98,30 @@ public class Bullet {
     public Group getGroup() {
         return group;
     }
+
     public void setGroup(Group group) {
         this.group = group;
     }
 
     //子弹和坦克碰撞
     public void collideWith(Tanke tanke) {
-        if (this.group==tanke.getGroup()) return;
+        if (this.group == tanke.getGroup()) return;
 
-        Rectangle rectBullet=new Rectangle(this.x,this.y,WIDTH,HEIGT);//子弹的矩形
-        Rectangle rectTanke=new Rectangle(tanke.getX(),tanke.getY(),tanke.WIDTH,tanke.HEIGT);//坦克的矩形
-        if (rectBullet.intersects(rectTanke)){//判断两个方块是否相交
+        Rectangle rectBullet = new Rectangle(this.x, this.y, WIDTH, HEIGT);//子弹的矩形
+        Rectangle rectTanke = new Rectangle(tanke.getX(), tanke.getY(), tanke.WIDTH, tanke.HEIGT);//坦克的矩形
+        if (rectBullet.intersects(rectTanke)) {//判断两个方块是否相交
             //碰到就死了
             tanke.die();
             this.die();
 
-            tf.explodeList.add(new Explode(x,y,tf));
+            //将子弹从坦克中心位置打出
+            int ex = tanke.getX() + Tanke.WIDTH / 2 - Explode.WIDTH / 2;
+            int ey = tanke.getY() + Tanke.HEIGT / 2 - Explode.HEIGT / 2;
+
+            tf.explodeList.add(new Explode(ex, ey, tf));
         }
     }
+
     //死
     public void die() {
         this.living = false;
