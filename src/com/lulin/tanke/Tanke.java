@@ -17,8 +17,8 @@ import java.util.Random;
  */
 public class Tanke {
     private int x, y;//想让动起来，坐标就不能写死
-    private Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
-    private static final int SPEND = 5;//坦克速度
+    private Dir dir =Dir.DOWN;//最开始给坦克一个方向，例如向下
+    private static final int SPEND = 2;//坦克速度
 
     public static int WIDTH = ResourceMgr.tankD.getWidth();//坦克图片的宽
     public static int HEIGT = ResourceMgr.tankD.getHeight();//坦克图片的高
@@ -27,7 +27,7 @@ public class Tanke {
     private boolean living = true;//活的
     private TankeFrame tf = null;
 
-    private Random random = null;//随机产生
+    private Random random = new Random();//随机产生
     //用于分组，区分子弹
     private Group group = Group.BAD;//坏蛋
 
@@ -87,9 +87,15 @@ public class Tanke {
                 y += SPEND;
                 break;
         }
-      /*  if (random.nextInt(10) > 8)
-            this.fire(); //发射子弹
-*/
+      if (this.group==Group.BAD && random.nextInt(100) > 95)
+          this.fire(); //发射子弹
+      if (this.group==Group.BAD&& random.nextInt(10) > 8)
+          randomDir();//定义随机方向——敌方坦克
+    }
+    //定义随机方向
+    private void randomDir() {
+
+        this.dir=Dir.values()[random.nextInt(4)];
     }
 
     public void setX(int x) {

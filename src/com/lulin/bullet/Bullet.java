@@ -114,8 +114,6 @@ public class Bullet {
             this.die();
 
             tf.explodeList.add(new Explode(x,y,tf));
-
-
         }
     }
     //死
