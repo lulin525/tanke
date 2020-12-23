@@ -25,6 +25,7 @@ public class Bullet {
     private boolean living = true;//处理边界问题
     private TankeFrame tf;
 
+    public Rectangle rectBullet = new Rectangle();
     //用于分组，区分子弹
     private Group group = Group.BAD;//坏蛋
 
@@ -34,6 +35,11 @@ public class Bullet {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+
+        rectBullet.x = this.x;
+        rectBullet.y = this.y;
+        rectBullet.width= WIDTH;
+        rectBullet.height= HEIGT;
     }
 
     //子弹画自己
@@ -79,6 +85,10 @@ public class Bullet {
                 y += SPEND;
                 break;
         }
+        //移动完后，更新矩形坐标
+        rectBullet.x = this.x;
+        rectBullet.y = this.y;
+
         if (x < 0 || y < 0 || x > TankeFrame.GAME_WIDTH || y > TankeFrame.GAME_HEIGHT)
             living = false;
     }
@@ -106,10 +116,9 @@ public class Bullet {
     //子弹和坦克碰撞
     public void collideWith(Tanke tanke) {
         if (this.group == tanke.getGroup()) return;
-
-        Rectangle rectBullet = new Rectangle(this.x, this.y, WIDTH, HEIGT);//子弹的矩形
-        Rectangle rectTanke = new Rectangle(tanke.getX(), tanke.getY(), tanke.WIDTH, tanke.HEIGT);//坦克的矩形
-        if (rectBullet.intersects(rectTanke)) {//判断两个方块是否相交
+       // Rectangle rectBullet = new Rectangle(this.x, this.y, WIDTH, HEIGT);//子弹的矩形
+       // Rectangle rectTanke = new Rectangle(tanke.getX(), tanke.getY(), tanke.WIDTH, tanke.HEIGT);//坦克的矩形
+        if (rectBullet.intersects(tanke.rectBullet)) {//判断两个方块是否相交
             //碰到就死了
             tanke.die();
             this.die();

@@ -30,6 +30,8 @@ public class Tanke {
     //用于分组，区分子弹
     private Group group = Group.BAD;//坏蛋
 
+    public Rectangle rectBullet = new Rectangle();
+
     //构造方法
     public Tanke(int x, int y, Dir dir, Group group, TankeFrame tf) {
         this.x = x;
@@ -37,6 +39,11 @@ public class Tanke {
         this.dir = dir;
         this.tf = tf;
         this.group = group;
+
+        rectBullet.x = this.x;
+        rectBullet.y = this.y;
+        rectBullet.width= WIDTH;
+        rectBullet.height= HEIGT;
     }
 
     //坦克画自己
@@ -85,6 +92,10 @@ public class Tanke {
                 y += SPEND;
                 break;
         }
+        //移动完后，更新矩形坐标
+        rectBullet.x = this.x;
+        rectBullet.y = this.y;
+
         if (this.group == Group.BAD && random.nextInt(100) > 95)
             this.fire(); //发射子弹
         if (this.group == Group.BAD && random.nextInt(10) > 8)
@@ -93,6 +104,9 @@ public class Tanke {
         //边界检测
         boundsCheck();
 
+        //移动完后，更新矩形坐标
+        rectBullet.x = this.x;
+        rectBullet.y = this.y;
     }
 
     //边界检测
