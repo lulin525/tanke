@@ -1,0 +1,13 @@
+#不要用空格，直接等号
+#1.敌方坦克数
+initTankeCount=10
+#2.坦克速度
+tankSpeed=2
+#3.子弹速度
+bulletSpeed=10
+#4.游戏窗口宽度
+gameWidth=800
+#5.游戏窗口高度
+gameHeight=600
+
+

@@ -1,6 +1,7 @@
 package com.lulin.tanke;
 
 import com.lulin.bullet.Bullet;
+import com.lulin.config.PropertyMgr;
 import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
 import com.lulin.frame.TankeFrame;
@@ -17,7 +18,7 @@ import java.util.Random;
 public class Tanke {
     private int x, y;//想让动起来，坐标就不能写死
     private Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
-    private static final int SPEND = 2;//坦克速度
+    private static final int SPEND = Integer.parseInt((String) PropertyMgr.get("tankSpeed"));//坦克速度
 
     public static int WIDTH = ResourceMgr.goodTankD.getWidth();//坦克图片的宽
     public static int HEIGT = ResourceMgr.goodTankD.getHeight();//坦克图片的高

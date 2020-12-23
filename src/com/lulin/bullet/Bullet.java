@@ -1,5 +1,6 @@
 package com.lulin.bullet;
 
+import com.lulin.config.PropertyMgr;
 import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
 import com.lulin.frame.TankeFrame;
@@ -16,7 +17,7 @@ import java.awt.*;
  * @Date: 2020/12/15 16:16
  */
 public class Bullet {
-    private static final int SPEND = 10;//子弹速度
+    private static final int SPEND = Integer.parseInt((String) PropertyMgr.get("bulletSpeed"));//子弹速度
     private int x, y;//坐标
     private Dir dir;
     public static int WIDTH = ResourceMgr.bulletD.getWidth();//子弹图片的宽

@@ -12,10 +12,13 @@ import javax.sound.sampled.SourceDataLine;
 /**
  * new线程播放爆炸的音频工具类
  */
-public class Audio{
+public class Audio {
 
     byte[] b = new byte[1024 * 1024 * 15];
 
+    /**
+     * 循环播放
+     */
     public void loop() {
         try {
 
@@ -59,6 +62,9 @@ public class Audio{
         }
     }
 
+    /**
+     * 单次播放
+     */
     public void play() {
         try {
             byte[] b = new byte[1024 * 5];

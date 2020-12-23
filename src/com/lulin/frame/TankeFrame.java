@@ -1,6 +1,7 @@
 package com.lulin.frame;
 
 import com.lulin.bullet.Bullet;
+import com.lulin.config.PropertyMgr;
 import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
 import com.lulin.tanke.Explode;
@@ -28,7 +29,8 @@ public class TankeFrame extends Frame {
 
     public List<Explode> explodeList = new ArrayList<>();//坦克爆炸
 
-    public static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;//窗口的宽度和高度
+    public static final int GAME_WIDTH = Integer.parseInt((String) PropertyMgr.get("gameWidth"));//窗口的宽度
+    public static final int GAME_HEIGHT = Integer.parseInt((String) PropertyMgr.get("gameHeight"));//窗口的高度
 
 
     //构造方法
