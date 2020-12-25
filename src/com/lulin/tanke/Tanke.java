@@ -1,11 +1,11 @@
 package com.lulin.tanke;
 
-import com.lulin.bullet.Bullet;
 import com.lulin.config.PropertyMgr;
 import com.lulin.enums.Dir;
 import com.lulin.enums.Group;
 import com.lulin.frame.TankeFrame;
 import com.lulin.staticflie.ResourceMgr;
+
 import java.awt.*;
 import java.util.Random;
 
@@ -16,8 +16,8 @@ import java.util.Random;
  * @Date: 2020/12/15 15:25
  */
 public class Tanke {
-    private int x, y;//想让动起来，坐标就不能写死
-    private Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
+    int x, y;//想让动起来，坐标就不能写死
+    Dir dir = Dir.DOWN;//最开始给坦克一个方向，例如向下
     private static final int SPEND = Integer.parseInt((String) PropertyMgr.get("tankSpeed"));//坦克速度
 
     public static int WIDTH = ResourceMgr.goodTankD.getWidth();//坦克图片的宽
@@ -25,13 +25,15 @@ public class Tanke {
 
     private boolean moving = true;//最初坦克是停止状态
     private boolean living = true;//活的
-    private TankeFrame tf = null;
+    TankeFrame tf = null;
 
     private Random random = new Random();//随机产生
     //用于分组，区分子弹
-    private Group group = Group.BAD;//坏蛋
+    Group group = Group.BAD;//坏蛋
 
     public Rectangle rectBullet = new Rectangle();
+
+    FireStrategy fire;
 
     //构造方法
     public Tanke(int x, int y, Dir dir, Group group, TankeFrame tf) {
@@ -43,8 +45,12 @@ public class Tanke {
 
         rectBullet.x = this.x;
         rectBullet.y = this.y;
-        rectBullet.width= WIDTH;
-        rectBullet.height= HEIGT;
+        rectBullet.width = WIDTH;
+        rectBullet.height = HEIGT;
+        if (group == Group.GOOD)
+            fire = new FourDirFireStrategy();
+        else
+            fire = new DefaultFireStrategy();
     }
 
     //坦克画自己
@@ -149,11 +155,8 @@ public class Tanke {
     }
 
     //发射子弹
-    public void fire() {
-        //将子弹从坦克中心位置打出
-        int bx = this.x + Tanke.WIDTH / 2 - Bullet.WIDTH / 2;
-        int by = this.y + Tanke.HEIGT / 2 - Bullet.HEIGT / 2;
-        tf.bulletList.add(new Bullet(bx, by, this.dir, this.group, this.tf));
+    public void fire() {//一般能穿参数就传参数，但是每次都需要new对，需要传参数就弄单例
+        fire.fire(this);
     }
 
 

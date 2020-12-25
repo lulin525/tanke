@@ -41,6 +41,8 @@ public class Bullet {
         rectBullet.y = this.y;
         rectBullet.width= WIDTH;
         rectBullet.height= HEIGT;
+
+        tf.bulletList.add(this);//new出子弹后，直接加到队列中
     }
 
     //子弹画自己
